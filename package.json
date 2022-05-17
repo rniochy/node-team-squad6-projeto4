@@ -1,0 +1,15 @@
+{
+  "name": "team-squad6-projeto4",
+  "version": "1.0.0",
+  "description": "NodeTeam Context - Desenvolver uma API com Integração de API de terceiros com autentição e autorização JWT com usuário e senha",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/rniochy/node-team-squad6-projeto4"
+  },
+  "author": "Rodrigo Lima - node-team-squad6",
+  "license": "ISC"
+}
