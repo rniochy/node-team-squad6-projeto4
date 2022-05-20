@@ -1,0 +1,29 @@
+import {Response, Request, NextFunction} from 'express'
+import jwt, {VerifyOptions } from 'jsonwebtoken'
+
+
+export default (req: Request, res: Response, next: NextFunction) => {
+    const authHeader = req.headers.authorization;
+
+    if(authHeader)  {
+         const partsOfToken = authHeader.split(' ');
+         if(!(partsOfToken.length ===2)) return res.status(401).send({msgError: "Token Error "});
+
+         const [scheme, token] = partsOfToken;
+         if(!/^Bearer$/i.test(scheme)) return res.status(401).send({msgErro: "No match token format"});
+
+         jwt.verify(token, "privateKey", verifyOptions, (err, decode)=>{
+            if(!decode) res.status(401).send({msgErro: "Token Invalid"});
+
+            req['userId'] = decode.email;
+            return next()
+         })
+    }
+
+    return res.status(401).send({masgError : "No Token provided"})
+}
+
+
+const verifyOptions: VerifyOptions = {
+    algorithms: ['RS256'],
+  };
