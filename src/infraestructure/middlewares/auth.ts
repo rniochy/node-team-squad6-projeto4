@@ -1,5 +1,6 @@
 import {Response, Request, NextFunction} from 'express'
 import jwt, {VerifyOptions } from 'jsonwebtoken'
+import User from '../../domain/entinty/user'
 
 
 export default (req: Request, res: Response, next: NextFunction) => {
@@ -14,8 +15,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
          jwt.verify(token, "privateKey", verifyOptions, (err, decode)=>{
             if(!decode) res.status(401).send({msgErro: "Token Invalid"});
-
-            req['userId'] = decode.email;
+            const email = decode.valueOf()
+            req['userId'] = email
             return next()
          })
     }
@@ -23,6 +24,9 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).send({masgError : "No Token provided"})
 }
 
+export const generateToken = ({email}: User) =>{
+     return jwt.sign({email}, 'privateKey', {expiresIn: '2d'});
+}
 
 const verifyOptions: VerifyOptions = {
     algorithms: ['RS256'],

@@ -4,13 +4,13 @@ export default  class User {
 
     }
 
-     getFullName(){
+     get fullName(){
           return this.fullname_
      }
-     getEmail(){
+     get email(){
           return this.email_
      }
-     getSenha(){
+     get senha(){
           return this.senha_
      }
      
