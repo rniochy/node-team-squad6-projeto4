@@ -15,8 +15,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
          jwt.verify(token, "privateKey", verifyOptions, (err, decode)=>{
             if(!decode) res.status(401).send({msgErro: "Token Invalid"});
-            const email = decode.valueOf()
-            req['userId'] = email
+            
             return next()
          })
     }

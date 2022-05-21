@@ -1,17 +1,17 @@
 export default  class User {
 
-    constructor(private fullname_: string, private email_:string, private senha_: string){
+    constructor(private fullname_: string, private email_:string, private password_: string){
 
     }
 
-     get fullName(){
+     get fullname(){
           return this.fullname_
      }
      get email(){
           return this.email_
      }
-     get senha(){
-          return this.senha_
+     get password(){
+          return this.password_
      }
      
 }

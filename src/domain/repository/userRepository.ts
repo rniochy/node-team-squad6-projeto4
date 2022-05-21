@@ -1,4 +1,7 @@
 import User from '../entinty/user'
-export interface userRepository {
+
+
+export default interface UserRepository {
       create(user:User) : Promise<void>
+      getUser(email:string) : Promise<User>
 }
