@@ -1,5 +1,5 @@
 import Http from './http'
-import express, {Response, Request}from 'express'
+import express from 'express'
 
 export default class ExpressAdapter implements Http {
     app: any;

@@ -1,5 +1,6 @@
 import { Router } from "express";
+import UserRepository from "../../domain/repository/userRepository";
 
 export default interface IUserRoute {
-    getRouters(): Router
+    getRouters(userRepository:UserRepository): Router
 }

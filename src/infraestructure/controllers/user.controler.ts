@@ -5,6 +5,6 @@ export default class UserControler {
 
         constructor(private http:Http, private userRepository: UserRepository ){
                 const u = new UserRoutes()
-                http.on('/users',   u.getRouters())        
+           http.on('/user', u.getRouters(userRepository))      
         }     
 }

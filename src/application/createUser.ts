@@ -14,5 +14,7 @@ export default class CreateUser {
 }
 
 type TUser = {
-    fullname:string, email:string, password:string
+    fullname:string, 
+    email:string, 
+    password:string
 } 
