@@ -1,21 +1,19 @@
 import Http from './http'
-import express from 'express'
+import express, {Response, Request}from 'express'
 
 export default class ExpressAdapter implements Http {
     app: any;
 
     constructor(){
          this.app = express()
+         this.app.use(express.json())
     }
-    on(method: string, url: string, callback: Function): void {
-        this.app[method](url, async function(req:any, res:any){
-                const output = await callback(req.params, req.body)
-                res.json(output)
-        })
+    on(url?: string, callback?: Function): void {
+        this.app['use'](url || null, callback)
     }
     listen(port: any): void {
         console.log("The server is running")
         this.app.listen(port)
     }
-
+  
 }
