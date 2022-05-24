@@ -1,23 +1,27 @@
 import Mail from "./mail";
 import MailService from "./mailService";
-import SendGridClient from "./sendGridClient";
+import sgMail from "@sendgrid/mail";
+import config from "./../config/config";
 
 export default class SendGridMailService implements MailService {
-    private sendGridClient: SendGridClient;
 
     constructor() {
-        if (process.env.SENDGRID_API_KEY) {
-            this.sendGridClient = new SendGridClient(process.env.SENDGRID_API_KEY);
+        if (config.SENDGRID_API_KEY) {
+            sgMail.setApiKey(config.SENDGRID_API_KEY);;
         } else {
             throw new Error("Missing SENDGRID_API_KEY environment variable");
         }
     }
 
     async send(mail: Mail): Promise<void> {
-        try {
-            await this.sendGridClient.sendEmail(mail);
-        } catch (error: any) {
-            throw new Error(error);
-        }
+        const msg = {
+            to: mail.to,
+            from: mail.from,
+            subject: mail.subject,
+            text: mail.body,
+            html: mail.body
+        };
+
+        await sgMail.send(msg);
     }
 }
