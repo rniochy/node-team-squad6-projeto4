@@ -9,7 +9,7 @@ export default class SendGridMailService implements MailService {
         if (config.SENDGRID_API_KEY) {
             sgMail.setApiKey(config.SENDGRID_API_KEY);;
         } else {
-            throw new Error("Missing SENDGRID_API_KEY environment variable");
+             console.log("SENDGRIND API KEY required!")
         }
     }
 
