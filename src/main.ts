@@ -5,6 +5,7 @@ import UserRepositoryDataBase from './infraestructure/repository/database/userRe
 import SendGridMailService from './infraestructure/mail/sendGridMailService';
 import MailControler from './infraestructure/controllers/mail.controler';
 
+const PORT = process.env.PORT
 const http = new ExpressAdapter();
 const connection = new PgPromiseConnectionAdapter();
 
@@ -14,5 +15,4 @@ new UserControler(http, userRepository);
 const mailService = new SendGridMailService();
 new MailControler(http, mailService);
 
-const PORT = process.env.PORT
 http.listen(PORT)

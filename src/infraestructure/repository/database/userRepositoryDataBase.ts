@@ -7,9 +7,9 @@ export default class UserRepositoryDataBase implements UserRepository {
     constructor(private connection:Connection){
         
     }
-    async getUser(email: string): Promise<User> {
-        const user: User = await this.connection.query(`select email from users where email = '${email}'`); 
-        return user
+    async getUser(email_: string): Promise<User> {
+        const user = await this.connection.query(`select email from users where email = '${email_}'`); 
+        return user[0]
     } 
     async create(user: User): Promise<void> {
         const {fullname, email, password} = user
