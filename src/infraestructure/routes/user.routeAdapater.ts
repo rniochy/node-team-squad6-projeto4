@@ -2,35 +2,51 @@ import { Router, Request, Response } from "express";
 import IUserRoute from "./user.route";
 import CreateUser from "../../application/createUser";
 import UserRepository from "../../domain/repository/userRepository";
+import passwordhash from "../middlewares/hashpassword/passwordhash";
+import PasswordhashAdapter from "../middlewares/hashpassword/passwordhashAdapter";
 
 
 export default class UserRoutes implements IUserRoute{
+   passwordhash: passwordhash;
+
+   constructor(){
+      this.passwordhash = new PasswordhashAdapter()
+   }
    async getRouters(userRepository:UserRepository):Promise<Router> {
          const router = Router()
          router.post('/create', async (req: Request, res: Response)=>{
-            //  try {
-                const {fullname, email, password} = req.body
+             try {
+                const {fullname, email, password: passwordToHash} = req.body
                 const createUser =  new CreateUser(userRepository)
 
                 
                 const  userExist = await userRepository.getUser(email)
-                const id:string =
-                 Math.random().toString(36).substring(2, 20) 
-                 + Math.random().toString(36).substring(2, 20)
+                const id:string = this.generateID()
+               //  const salt = +process.env.SALT | 12
+                const salt = await  this.passwordhash.genSalt(12)
+                const password = await this.passwordhash.hashPassword(passwordToHash, salt)
                 
+                console.log(password)
                 if(userExist) return res.send({msg: "User already Exist!"})
+
+
 
                 createUser.perform({id, fullname, email, password})
                         .then(result => res.status(200).send({sucess: "user created!"})) 
                         .catch(err=> res.status(400).send({error: "Didn't create user!"}))
-            //  }catch(err){
-            //       res.status(500).send({error: "User dont't created"})
-            // }
+             }catch(err){
+                  res.status(500).send({error: "User dont't created"})
+            }
                  
             })
 
      return router     
 }
+
+   generateID (): string {
+      return Math.random().toString(36).substring(2, 20) 
+               + Math.random().toString(36).substring(2, 20)
+ }
 
 
 } 

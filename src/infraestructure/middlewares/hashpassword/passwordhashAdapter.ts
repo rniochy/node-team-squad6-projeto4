@@ -2,7 +2,7 @@ import IPasswordHash from "./passwordhash";
 import bcrypt from 'bcrypt'
 
 export default class PasswordhashAdapter implements IPasswordHash {
-   async genSalt(valueTosalt: number): Promise<String> {
+   async genSalt(valueTosalt: number): Promise<string> {
        const salt = await bcrypt.genSalt(valueTosalt);
        return salt     
     }
@@ -12,7 +12,7 @@ export default class PasswordhashAdapter implements IPasswordHash {
     }
     async comparePassword(currentPassword: string, otherPassword: string): Promise<Boolean> {
             const isEqualPassword = await bcrypt.compare(currentPassword, otherPassword);
-            return isEqualPassword
+            return isEqualPassword 
     }
 
 }
