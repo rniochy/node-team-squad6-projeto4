@@ -5,8 +5,8 @@ export default class CreateUser {
 
     constructor(private userRepository: UserRepository) { }
 
-    async perform({ id, fullname, email, password }: TUser) {
-        const user = new User(fullname, email, password);
+    async perform({id, fullname, email, password}: TUser) {
+        const user = new User(id, fullname, email, password);
         const res = await this.userRepository.create(user)
         return res
     }
