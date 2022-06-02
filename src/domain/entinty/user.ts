@@ -6,5 +6,6 @@ export default  class User {
      get fullname(){ return this.fullname_}
      get email(){ return this.email_}
      get password(){ return this.password_}
+     set password(password){  this.password_ = password}
      
 }

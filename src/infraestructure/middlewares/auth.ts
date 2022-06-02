@@ -23,8 +23,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).send({masgError : "No Token provided"})
 }
 
-export const generateToken = ({email}: User) =>{
-     return jwt.sign({email}, 'privateKey', {expiresIn: '2d'});
+export const generateToken = ({email, id}: User) =>{
+     return jwt.sign({email, id}, 'privateKey', {expiresIn: '1d'});
 }
 
 const verifyOptions: VerifyOptions = {
