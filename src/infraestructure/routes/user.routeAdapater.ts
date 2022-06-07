@@ -5,6 +5,7 @@ import { generateToken } from "../middlewares/auth";
 import UserRepository from "../../domain/repository/userRepository";
 import passwordhash from "../middlewares/hashpassword/passwordhash";
 import PasswordhashAdapter from "../middlewares/hashpassword/passwordhashAdapter";
+import auth from '../middlewares/auth'
 
 
 
@@ -60,6 +61,13 @@ export default class UserRoutes implements IUserRoute{
                } else {
                    res.status(400).send({error: "The password is incorrect"})
                }
+            })
+            router.post('/editnmane', auth, async (req: Request, res: Response)=>{
+               const {email} = req.body
+               const {id} = req.body.user
+               
+               res.send({id: id})
+
             })
 
      return router     
