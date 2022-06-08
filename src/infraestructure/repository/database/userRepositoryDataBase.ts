@@ -7,6 +7,10 @@ export default class UserRepositoryDataBase implements UserRepository {
     constructor(private connection:Connection){
         
     }
+    async alterName(userdata: UserData): Promise<void> {
+        const {id, fullname} = userdata
+        const user = await this.connection.query(`update users set fullname = '${fullname}' where id = '${id}'`); 
+    }
     async getUser(email: string): Promise<User> {
         const user = await this.connection.query(`select * from users where email = '${email}'`); 
         return user[0]
@@ -17,4 +21,9 @@ export default class UserRepositoryDataBase implements UserRepository {
          return
     }
 
+}
+
+type UserData = {
+    id: string,
+    fullname: string
 }

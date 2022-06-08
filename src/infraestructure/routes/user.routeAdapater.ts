@@ -48,26 +48,31 @@ export default class UserRoutes implements IUserRoute{
             router.post('/login', async (req: Request, res: Response)=>{
                const {email, password} = req.body
 
-               const userExist = await userRepository.getUser(email)
+               try{
+                  const userExist = await userRepository.getUser(email)
 
-               if(!userExist) res.status(400).send({error: "User don't exist!"})
-
-                const compareResult = await this.passwordhash.comparePassword(password, userExist.password)
-
-               if(compareResult){
-                  const token = generateToken(userExist)
-                  userExist.password = ""
-                  res.status(200).send({userExist, token})
-               } else {
-                   res.status(400).send({error: "The password is incorrect"})
+                  if(!userExist) res.status(400).send({error: "User don't exist!"})
+   
+                  const compareResult = await this.passwordhash.comparePassword(password, userExist.password)
+                  
+                  if(compareResult){
+                     const token = generateToken(userExist)
+                     userExist.password = ""
+                     res.status(200).send({userExist, token})
+                  } else {
+                      res.status(400).send({error: "The password is incorrect"})
+                  }
+               }catch(err){
+                   res.status(500).send({error: "Is not possible login"})
                }
             })
             router.post('/editnmane', auth, async (req: Request, res: Response)=>{
-               const {email} = req.body
-               const {id} = req.body.user
+               if(!req.body.user.decode) return
                
-               res.send({id: id})
-
+               const {id}  = req.body.user.decode
+               const {fullname} = req.body
+               await userRepository.alterName({id, fullname})
+               res.send({sucess: "SUCESSFULL"})
             })
 
      return router     
@@ -80,3 +85,8 @@ export default class UserRoutes implements IUserRoute{
 
 
 } 
+
+type UserData = {
+   id: string,
+   fullname: string
+}

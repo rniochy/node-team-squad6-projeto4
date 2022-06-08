@@ -16,7 +16,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
          if(!/^Bearer$/i.test(scheme)) return res.status(401).send({msgErro: "No match token format"});
 
          jwt.verify(token, privateKey, (err, decode)=>{
-              req.body.user = decode
+               const body = req.body
+               req.body.user = {decode, body}
             if(!decode) res.status(401).send({msgErro: "Token Invalid"});
             
             return next()
