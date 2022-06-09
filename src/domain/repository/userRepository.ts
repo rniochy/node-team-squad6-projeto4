@@ -6,6 +6,7 @@ export default interface UserRepository {
       getUser(email:string) : Promise<User> 
       alterName(userdata : UserData) : Promise<void>
       alterPassword(userdata: UserData) : Promise<void>
+      alterEmail(userdata: UserData) : Promise<void>
 }
 
 type UserData = {

@@ -5,7 +5,11 @@ import Connection from '../../database/Connectionn';
 export default class UserRepositoryDataBase implements UserRepository {
 
     constructor(private connection:Connection){ }
-
+    async alterEmail(userdata: { id?: string | undefined; fullname?: string | undefined; email?: string | undefined; password?: string | undefined; }): Promise<void> {
+        const {id, email} = userdata
+        await this.connection.query(`update users set email = '${email}' where id = '${id}'`); 
+        return
+    }
     async alterPassword(userdata: UserData): Promise<void> {
         const {id, password} = userdata
         await this.connection.query(`update users set password = '${password}' where id = '${id}'`); 

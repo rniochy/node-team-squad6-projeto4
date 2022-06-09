@@ -89,6 +89,18 @@ export default class UserRoutes implements IUserRoute{
                   res.status(500).send({error: "Is not possible change password"})
                }
             })
+            router.post('/editemail', auth, async (req: Request, res: Response)=>{
+               if(!req.body.user.decode) return
+               try{
+                  const {id}  = req.body.user.decode
+                  const {email} = req.body
+                  console.log(id, email)
+                  await userRepository.alterEmail({id, email})
+                  res.send({sucess: "SUCESSFULL"})
+               } catch(err){
+                  res.status(500).send({error: "Is not possible change email"})
+               }
+            })
 
      return router     
 }
@@ -97,6 +109,5 @@ export default class UserRoutes implements IUserRoute{
       return Math.random().toString(36).substring(2, 20) 
                + Math.random().toString(36).substring(2, 20)
  }
-
 
 } 
