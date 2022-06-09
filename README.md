@@ -32,7 +32,7 @@ O projeto deverá integrar uma api de terceiros para o usuário consumir.
 
 </br>
 
-4. O usuário poderá criar, listar, alterar e remover os dados consulmidos.
+4. O usuário poderá criar, listar, alterar e remover os dados consumidos.
 
 </br>
 

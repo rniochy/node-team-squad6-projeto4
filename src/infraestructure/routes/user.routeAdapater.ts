@@ -22,7 +22,6 @@ export default class UserRoutes implements IUserRoute{
                 const {fullname, email, password: passwordToHash} = req.body
                 const createUser =  new CreateUser(userRepository)
 
-                console.log(req.body, fullname)
                 if((fullname == undefined) || (email == undefined)  || (passwordToHash == undefined)) 
                  return res.status(400).send({error: "Every field are required!"}) 
                 
@@ -33,12 +32,10 @@ export default class UserRoutes implements IUserRoute{
                 
                 if(userExist) return res.status(400).send({msg: "User already Exist!"})
 
-
-
                createUser.perform({id, fullname, email, password})
                         .then(result => res.status(200).send({sucess: "user created!"})) 
                         .catch(err=> res.status(400).send({error: "Didn't create user!"}))
-             }catch(err){
+            }catch(err){
                   res.status(500).send({error: "User dont't created"})
             }
                  
@@ -67,6 +64,7 @@ export default class UserRoutes implements IUserRoute{
             })
             router.post('/editnmane', auth, async (req: Request, res: Response)=>{
                if(!req.body.user.decode) return
+
                 try{
                    const {id}  = req.body.user.decode
                    const {fullname} = req.body
@@ -78,6 +76,7 @@ export default class UserRoutes implements IUserRoute{
             })
             router.post('/editpassword', auth, async (req: Request, res: Response)=>{
                if(!req.body.user.decode) return
+
                try{
                   const {id}  = req.body.user.decode
                   const {password:passwordToHash} = req.body
@@ -91,6 +90,7 @@ export default class UserRoutes implements IUserRoute{
             })
             router.post('/editemail', auth, async (req: Request, res: Response)=>{
                if(!req.body.user.decode) return
+               
                try{
                   const {id}  = req.body.user.decode
                   const {email} = req.body
@@ -106,8 +106,8 @@ export default class UserRoutes implements IUserRoute{
 }
 
    generateID (): string {
-      return Math.random().toString(36).substring(2, 20) 
-               + Math.random().toString(36).substring(2, 20)
+      return  Math.random().toString(36).substring(2, 20) 
+            + Math.random().toString(36).substring(2, 20)
  }
 
 } 
