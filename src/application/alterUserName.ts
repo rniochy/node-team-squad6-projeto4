@@ -1,14 +1,10 @@
 import UserRepository from "../domain/repository/userRepository";
+import User from "../domain/entinty/user";
 
 export class AlterUserName {
     constructor(private userRepository: UserRepository){}
-    async perform(userdata: UserData){
-        await this.userRepository.alterName(userdata)
+    async perform(user: User){
+        await this.userRepository.alterName(user)
         return
     }
-}
-
-type UserData = {
-    id: string,
-    fullname: string
 }
